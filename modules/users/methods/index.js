@@ -37,7 +37,7 @@ exports.signin = async (req, res, next) => {
 exports.signup = async (req, res, next) => {
   const { name, email, role, password } = req.body;
   try {
-    const validationError = await signup.validateAsync(req.body, { abortEarly: false });
+    await signup.validateAsync(req.body, { abortEarly: false });
     const oldUser = await db.User.findOne({ where: { email } });
     if (oldUser)
       return res.status(400).json({ message: "User already exists" });
@@ -60,6 +60,6 @@ exports.signup = async (req, res, next) => {
 
     res.status(201).json({ result, token });
   } catch (error) {
-    return next(err)
+    return next(error)
   }
 };

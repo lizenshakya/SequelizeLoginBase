@@ -46,9 +46,15 @@ app.use((req, res, next) => {
   //global error handler thrown in next
   app.use((error, req, res, next) => {
     if(error.isJoi === true) {
+      const errorMessages = error.details.map(element => {
+        return {
+          message: element.message,
+          field: element.path
+        }
+      })
       return res.status(422).json({
-        error:{
-          messages: error.details
+        errors:{
+          errorMessages
         }
       });
     } else {

@@ -5,6 +5,7 @@ exports.create = async (req, res, next) => {
   const { productName, productPrice, quantity } = req.body;
   try {
     const result = await product.validateAsync(req.body, { abortEarly: false });
+    
     await db.Product.create({
       product_name: productName,
       product_price: productPrice,
