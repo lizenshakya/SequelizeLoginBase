@@ -1,14 +1,18 @@
 const db = require("../../../models");
 const { product } = require('../product.validation');
+const logger  = require('../../middleware/logger')
 
 exports.create = async (req, res, next) => {
   const { productName, productPrice, quantity } = req.body;
   try {
+    logger.info({message: "Server Sent A Hello World!", debugId: "1234567890"});
+    logger.error({message: "Server Sent A Hello World!", debugId: "1234567890"});
+
     const result = await product.validateAsync(req.body, { abortEarly: false });
     
     await db.Product.create({
-      product_name: productName,
-      product_price: productPrice,
+      productName,
+      productPrice,
       quantity,
     });
     res.status(200).json({ message: "Product saved successfully" });
@@ -50,8 +54,8 @@ exports.update = async (req, res) => {
       return res.status(404).json({ message: "Product does not exit" });
     const updateProduct = await db.Product.update(
       {
-        product_name: productName,
-        product_price: productPrice,
+        productName,
+        productPrice,
         quantity,
       },
       { where: { id: productId } }

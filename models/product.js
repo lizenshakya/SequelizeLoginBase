@@ -14,20 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Product.init({
-    id: {
+    productId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,        
       allowNull: false,
     },
-    product_name: DataTypes.STRING,
-    product_price: DataTypes.DECIMAL(10,2),
+    productName: DataTypes.STRING,
+    productPrice: DataTypes.DECIMAL(10,2),
     quantity: DataTypes.INTEGER,
-    is_deleted: {
+    isDeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
   }, {
+    underscored: true,
     sequelize,
     modelName: 'Product',
     tableName: 'Product'

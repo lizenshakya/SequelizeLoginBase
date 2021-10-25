@@ -30,7 +30,6 @@ exports.signin = async (req, res, next) => {
     res.status(200).json({ oldUser: oldUser, token });
   } catch (err) {
     return next(err)
-    // res.status(500).json({ message: "Something went wrong" });
   }
 };
 
