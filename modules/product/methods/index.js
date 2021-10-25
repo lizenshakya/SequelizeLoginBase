@@ -5,8 +5,8 @@ const logger  = require('../../middleware/logger')
 exports.create = async (req, res, next) => {
   const { productName, productPrice, quantity } = req.body;
   try {
-    logger.info({message: "Server Sent A Hello World!", debugId: "1234567890"});
-    logger.error({message: "Server Sent A Hello World!", debugId: "1234567890"});
+    logger.debug({message: "Server Sent A Hello World this is info!", debugId: "1234567890", ipAddress: "123456789SW"});
+    logger.error({message: "Error message!", debugId: "123456", ipAddress: "123456789SW"});
 
     const result = await product.validateAsync(req.body, { abortEarly: false });
     
