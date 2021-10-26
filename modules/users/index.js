@@ -5,7 +5,7 @@
     const userRouter = express.Router();
 
     const user = require('./methods');
-    //userRouter.get('/', user.get);
+    userRouter.get('/', user.getUserInfo);
 
     userRouter.post('/signup', user.signup );
     userRouter.post('/signin', user.signin );
