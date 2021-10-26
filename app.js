@@ -8,6 +8,9 @@ const router = require('./routes');
 //const dbConnector = require('./helpers/database.helper');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./docs');
+const { sanitize } = require('./utils/sanitizer');
+const { uuid } = require('uuidv4');
+
 const cors = require('cors');
 app.use(cors());
 app.options('*', cors());
@@ -21,17 +24,15 @@ app.use(express.urlencoded({extended:false}));
 
 //dbConnector.init(app);
 
-// app.use((req, res, next) => {
-//     console.log(app.locals.db)
-//     if (app.locals.db) {
-//         req.db = app.locals.db;
-//     }
-
-//     next();
-// });
+app.use((req, res, next) => {
+   req.debugId = uuid();
+   req.ipAddress = req.header('x-forwarded-for') || req.connection.remoteAddress;
+   req.device = req.header("user-agent") || "";
+   next()
+});
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api', router);
+app.use('/api', sanitize(), router);
 app.use('/', (req, res, next) => {
     res.status(200);
     res.send('Hello World');
